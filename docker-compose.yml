@@ -6,7 +6,7 @@ services:
   mydatabase:
     restart: always
     container_name: DB_IOS
-    image: mysql:5.7
+    image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: mydbroot
       MYSQL_DATABASE: tesla
