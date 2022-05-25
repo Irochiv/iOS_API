@@ -1,0 +1,34 @@
+version: "3"
+networks:
+  my-network:
+
+services:
+  mydatabase:
+    restart: always
+    container_name: DB_IOS
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: mydbroot
+      MYSQL_DATABASE: tesla
+      MYSQL_USER: mydbuser
+      MYSQL_PASSWORD: mydbpassword
+    ports:
+      - 3306:3306
+    volumes:
+      - ./files:/var/lib/mysql/
+      - ./conf:/etc/mysql/conf.d/
+
+  app:
+    restart: always
+    container_name: API_IOS
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - my-network
+  
