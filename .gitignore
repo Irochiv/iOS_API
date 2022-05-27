@@ -1,5 +1,6 @@
 files
-/files
+files/
+log/
 **/files
 # Django #
 *.log
