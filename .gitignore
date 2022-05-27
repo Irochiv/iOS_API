@@ -1,4 +1,6 @@
+files
 /files
+**/files
 # Django #
 *.log
 *.pot
