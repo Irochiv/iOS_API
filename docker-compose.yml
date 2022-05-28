@@ -16,7 +16,6 @@ services:
       - 3306:3306
     volumes:
       - ./files:/var/lib/mysql/
-      - ./logs:/var/log/mysql/
       - ./conf:/etc/mysql/conf.d/
 
   app:
