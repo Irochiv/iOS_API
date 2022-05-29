@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.7.3-MariaDB-1:10.7.3+maria~focal - mariadb.org binary distribution
+-- Versión del servidor:         10.8.3-MariaDB-1:10.8.3+maria~jammy - mariadb.org binary distribution
 -- SO del servidor:              debian-linux-gnu
 -- HeidiSQL Versión:             11.3.0.6295
 -- --------------------------------------------------------
@@ -15,10 +15,10 @@
 -- Volcando datos para la tabla tesla.categoria: ~3 rows (aproximadamente)
 DELETE FROM `categoria`;
 /*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
-INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`) VALUES
-	(1, 'Autos'),
-	(2, 'Camionetas'),
-	(3, 'Camiones');
+INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_imagen`) VALUES
+	(1, 'Autos', 'https://autotest.com.ar/wp-content/uploads/2021/06/tesla-model-s-plaid-frente.jpg'),
+	(2, 'Camionetas', 'https://s1.eestatic.com/2019/06/03/actualidad/actualidad_403473194_130559332_1024x576.jpg'),
+	(3, 'Camiones', 'https://d500.epimg.net/cincodias/imagenes/2017/08/25/motor/1503648403_960717_1503648862_noticia_normal.jpg');
 /*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
 
 -- Volcando datos para la tabla tesla.pedido: ~15 rows (aproximadamente)

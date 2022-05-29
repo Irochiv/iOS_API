@@ -5,6 +5,7 @@ from django.db import models
 class Categoria(models.Model):
     categoria_id = models.AutoField(primary_key=True)
     categoria_nombre = models.CharField(max_length=50)
+    categoria_imagen = models.CharField(max_length=1000)
 
     class Meta:
         managed = False
