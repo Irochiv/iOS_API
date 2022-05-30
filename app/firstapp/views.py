@@ -26,7 +26,7 @@ def vista(request):
 
 
 def login(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         try: 
             json_object = json.loads(request.body)
         except KeyError as e:
