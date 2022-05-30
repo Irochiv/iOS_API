@@ -184,17 +184,31 @@ def pedidoNuevo(request):
         responseData['status_code'] = 'False'
         return JsonResponse(responseData, status=404)
 
-def pedido(request):
+def pedidos(request,iduser):
     if request.method == 'GET':
-        try:
-            json_object = json.loads(request.body)
-        except:
-            responseData ={}
-            responseData['status_message'] = 'Invalid JSON'
-            responseData['status_code'] = 'False'
-            return JsonResponse(responseData, status=400)
+
+        responseData = {}
+        cursor = connection.cursor()
+        cursor.execute("SELECT u.usuario_nombre, u.usuario_correo, p.pedido_estatus, c.categoria_nombre, pr.producto_nombre, pr.producto_descripcion, pr.producto_precio, pp.cantidad, p.pedido_id  FROM pedido p join pedido_producto pp on p.pedido_id = pp.pedido_pedido_id join producto pr on pp.producto_producto_id = pr.producto_id join usuarios u on p.usuarios_usuario_id = u.usuario_id join categoria c on c.categoria_id = pr.categoria_categoria_id where u.usuario_id = %s", [iduser]) 
+        datos = cursor.fetchall()
+        data = list()
+        for d in datos:
+            data.append({"Nombre": d[0], "Correo": d[1], "Estatus": d[2], "Categoria": d[3], "Modelo": d[4], "Descripcion": d[5], "Precio": d[6], "Cantidad": d[7], "Pedido_id":d[8]})
+        responseData['data']= data  
+        responseData['status_message'] = 'Conectado'
+        responseData['status_code'] = 'True'
+        return JsonResponse(responseData, status=200)
+    
+    else:
+        responseData ={}
+        responseData['status_message'] = 'Wrong method'
+        responseData['status_code'] = 'False'
+        return JsonResponse(responseData, status=404)
+
+def pedido(request,iduser,idpedido):
+    if request.method == 'GET':
         try: 
-            one_entry = Pedido.objects.get(pedido_id=json_object['pedido_id'])
+            one_entry = Pedido.objects.get(pedido_id=idpedido)
         except KeyError as e:
             responseData ={}
             responseData['status_message'] = 'The id its not valid'
@@ -204,11 +218,11 @@ def pedido(request):
         responseData = {}
         
         cursor = connection.cursor()
-        cursor.execute("SELECT u.usuario_nombre, u.usuario_correo, p.pedido_estatus, c.categoria_nombre, pr.producto_nombre, pr.producto_descripcion, pr.producto_precio  FROM pedido p join pedido_producto pp on p.pedido_id = pp.pedido_pedido_id join producto pr on pp.producto_producto_id = pr.producto_id join usuarios u on p.usuarios_usuario_id = u.usuario_id join categoria c on c.categoria_id = pr.categoria_categoria_id where p.pedido_id = %s", [json_object['pedido_id']]) 
+        cursor.execute("SELECT u.usuario_nombre, u.usuario_correo, p.pedido_estatus, c.categoria_nombre, pr.producto_nombre, pr.producto_descripcion, pr.producto_precio, pp.cantidad, p.pedido_id  FROM pedido p join pedido_producto pp on p.pedido_id = pp.pedido_pedido_id join producto pr on pp.producto_producto_id = pr.producto_id join usuarios u on p.usuarios_usuario_id = u.usuario_id join categoria c on c.categoria_id = pr.categoria_categoria_id where u.usuario_id = %s and p.pedido_id = %s", [iduser, idpedido]) 
         datos = cursor.fetchall()
         data = list()
         for d in datos:
-            data.append({"Nombre": d[0], "Correo": d[1], "Estatus": d[2], "Categoria": d[3], "Modelo": d[4], "Descripcion": d[5], "Precio": d[6]})
+            data.append({"Nombre": d[0], "Correo": d[1], "Estatus": d[2], "Categoria": d[3], "Modelo": d[4], "Descripcion": d[5], "Precio": d[6], "Cantidad": d[7], "Pedido_id":d[8]})
         responseData['data']= data  
         responseData['status_message'] = 'Conectado'
         responseData['status_code'] = 'True'
