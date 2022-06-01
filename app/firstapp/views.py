@@ -152,16 +152,18 @@ def pedidoNuevo(request):
             b.save()
             
             try:
-                for product in json_object['products']:
-                    cursor = connection.cursor()
-                    cursor.execute("INSERT INTO pedido_producto (pedido_pedido_id, producto_producto_id, cantidad) values (%s,%s,%s)", [b.pedido_id, product['id'], product['cantidad'] ]) 
-                    cursor.fetchall()
-                    cursor.close()
+                # for product in json_object['products']:
+                # cursor = connection.cursor()
+                # cursor.execute("INSERT INTO pedido_producto (pedido_pedido_id, producto_producto_id, cantidad) values (%s,%s,%s)", [b.pedido_id, json_object['idproducto'], json_object['cantidad'] ]) 
+                # cursor.fetchall()
+                # cursor.close()
+                p = Producto.objects.get(producto_id = json_object['idproducto'])
+                pp = PedidoProducto(b,p,json_object['cantidad'])
 
             except KeyError as e:
                 b.delete()
                 responseData = {}
-                responseData['status_message'] = 'Error'
+                responseData['status_message'] = e.text()
                 responseData['status_code'] = 'False'
                 return JsonResponse(responseData, status=400)
 
