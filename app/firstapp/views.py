@@ -153,13 +153,13 @@ def pedidoNuevo(request):
             
             try:
                 # for product in json_object['products']:
-                # cursor = connection.cursor()
-                # cursor.execute("INSERT INTO pedido_producto (pedido_pedido_id, producto_producto_id, cantidad) values (%s,%s,%s)", [b.pedido_id, json_object['idproducto'], json_object['cantidad'] ]) 
-                # cursor.fetchall()
-                # cursor.close()
-                p = Producto.objects.get(producto_id = json_object['idproducto'])
-                pp = PedidoProducto(b,p,json_object['cantidad'])
-                pp.save()
+                cursor = connection.cursor()
+                cursor.execute("INSERT INTO pedido_producto (pedido_pedido_id, producto_producto_id, cantidad) values (%s,%s,%s)", [b.pedido_id, json_object['idproducto'], json_object['cantidad'] ]) 
+                cursor.fetchall()
+                cursor.close()
+                # p = Producto.objects.get(producto_id = json_object['idproducto'])
+                # pp = PedidoProducto(b,p,json_object['cantidad'])
+                # pp.save()
 
             except KeyError as e:
                 b.delete()
