@@ -159,6 +159,7 @@ def pedidoNuevo(request):
                 # cursor.close()
                 p = Producto.objects.get(producto_id = json_object['idproducto'])
                 pp = PedidoProducto(b,p,json_object['cantidad'])
+                pp.save()
 
             except KeyError as e:
                 b.delete()
